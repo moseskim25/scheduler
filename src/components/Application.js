@@ -5,13 +5,35 @@ import "components/Application.scss";
 import axios from "axios";
 import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
 
+
 export default function Application() {
+  
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {},
   });
+
+  function bookInterview(id, interview) {
+
+    // appointment object
+    // id: 1
+    // interview: {student: "name", interviewer: 9}
+    // time: "12pm"
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    //replaces that appointment id object with the new appointment
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+  }
+  
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
@@ -27,7 +49,11 @@ export default function Application() {
 
   //Generates array of appointments for a given day
   const appointmentsArr = appointments.map(
-    (appointment) => <Appointment key={appointment.id} {...appointment} interviewers={interviewers} />
+    (appointment) => <Appointment 
+      key={appointment.id}
+      {...appointment}
+      interviewers={interviewers}
+      bookInterview={bookInterview}/>
   );
   appointmentsArr.push(<Appointment key="last" time="5pm" />);
 
