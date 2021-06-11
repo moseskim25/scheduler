@@ -9,16 +9,20 @@ import Form from "components/Appointment/Form";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = 'CREATE';
+// cont SAVING = 'SAVING';
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
   
   function save(name, interviewer) {
+    // transition(SAVING);
     const interview = {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview);
+    props.bookInterview(props.id, interview)
+    .then(() => transition(SHOW))
+    .catch(err => console.log('error within index.js:', err));
   }
 
   return (
@@ -28,7 +32,7 @@ export default function Appointment(props) {
         interviewers={props.interviewers}
         onCancel={() => back()}
         onSave={save}/>}
-      {mode === SHOW && <Show student={props.interview.student} interviewer={props.interview.interviewer} />}
+      {mode === SHOW && props.interview && <Show student={props.interview.student} interview={props.interview} />}
     </div>
   );
 }

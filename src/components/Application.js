@@ -3,7 +3,7 @@ import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import "components/Application.scss";
 import axios from "axios";
-import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 
 
 export default function Application() {
@@ -32,6 +32,12 @@ export default function Application() {
       [id]: appointment
     };
 
+    
+    return axios.put(`/api/appointments/${id}`, {interview})
+    .then(() => {
+      setState({...state, appointments});
+    })
+    .catch(err => console.log('error within Application.js:', err));
   }
   
 
@@ -47,11 +53,13 @@ export default function Application() {
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
+
   //Generates array of appointments for a given day
   const appointmentsArr = appointments.map(
     (appointment) => <Appointment 
       key={appointment.id}
       {...appointment}
+      interview={getInterview(state, appointment.interview)}
       interviewers={interviewers}
       bookInterview={bookInterview}/>
   );

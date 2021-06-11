@@ -25,13 +25,12 @@ export function getAppointmentsForDay(state, day) {
 export function getInterview(state, interview) {
   if (interview === null) return null;
   
-  // const result = interview;
   const interviewerId = interview.interviewer;
-  
-  interview.interviewer = state.interviewers[`${interviewerId}`];
-  return interview;
+  return {...interview, interviewer: state.interviewers[`${interviewerId}`]};
 }
 
+
+//{id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg"}
 export function getInterviewersForDay(state, day) {
   if (state.days.length === 0) return [];
 
@@ -42,6 +41,5 @@ export function getInterviewersForDay(state, day) {
   const interviewers = idsOnDay.map(id => {
     return state.interviewers[`${id}`];
   })
-
   return interviewers;
 }
