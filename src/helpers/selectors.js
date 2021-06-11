@@ -1,7 +1,6 @@
 //state = { days: Array, appointments: Object, interviewers: Object }
 
-//takes appointment ids from above and returns in format
-// ex. {
+// example of one appointment: {
 //   id: 3,
 //   time: "2pm",
 //   interview: { student: "Archie Cohen", interviewer: 2 }
@@ -21,14 +20,16 @@ export function getAppointmentsForDay(state, day) {
   return appointments;
 }
 
+
+//ex: interview = { student: "Archie Cohen", interviewer: 2 }
 export function getInterview(state, interview) {
   if (interview === null) return null;
   
-  const result = interview;
+  // const result = interview;
   const interviewerId = interview.interviewer;
   
-  result.interviewer = state.interviewers[`${interviewerId}`];
-  return result;
+  interview.interviewer = state.interviewers[`${interviewerId}`];
+  return interview;
 }
 
 export function getInterviewersForDay(state, day) {
