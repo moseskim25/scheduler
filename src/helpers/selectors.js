@@ -39,8 +39,6 @@ export function getInterviewersForDay(state, day) {
   if (idsOnDay.length === 0) return []
   else idsOnDay = idsOnDay[0].interviewers;
 
-  console.log(idsOnDay);
-
   const interviewers = idsOnDay.map(id => {
     return state.interviewers[`${id}`];
   })

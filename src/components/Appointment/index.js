@@ -13,8 +13,6 @@ const CREATE = 'CREATE';
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(props.interview ? SHOW : EMPTY);
 
-  console.log('props:', props);
-
   return (
     <div>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
