@@ -3,7 +3,11 @@ import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import "components/Application.scss";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
+import useVisualMode from 'hooks/useVisualMode';
+
+const EMPTY = "EMPTY";
+const SHOW = "SHOW";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -15,23 +19,10 @@ export default function Application(props) {
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-
   const appointments = getAppointmentsForDay(state, state.day);
-  // const schedule = appointments.map((appointment) => {
-  //   const interview = getInterview(state, appointment.interview);
-  
-  //   return (
-  //     <Appointment
-  //       key={appointment.id}
-  //       id={appointment.id}
-  //       time={appointment.time}
-  //       interview={interview}
-  //     />
-  //   );
-  // });
+
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
-  // const setDays = (days) => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
     Promise.all([
@@ -45,8 +36,10 @@ export default function Application(props) {
     
   }, []);
   
-  const appointmentsArr = dailyAppointments.map((appointment) => <Appointment key={appointment.id} {...appointment} />);
+  const appointmentsArr = dailyAppointments.map((appointment) => <Appointment key={appointment.id} {...appointment} interviewers={getInterviewersForDay(state, state.day)}/>);
   appointmentsArr.push(<Appointment key="last" time="5pm" />);
+
+
 
   return (
     <main className="layout">
