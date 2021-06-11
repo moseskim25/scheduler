@@ -20,10 +20,14 @@ export default function Application() {
       setState((prev) => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
+  
+  const appointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
 
   //Generates array of appointments for a given day
-  const appointments = getAppointmentsForDay(state, state.day);
-  const appointmentsArr = appointments.map((appointment) => <Appointment key={appointment.id} {...appointment} interviewers={getInterviewersForDay(state, state.day)} />);
+  const appointmentsArr = appointments.map(
+    (appointment) => <Appointment key={appointment.id} {...appointment} interviewers={interviewers} />
+  );
   appointmentsArr.push(<Appointment key="last" time="5pm" />);
 
   return (
