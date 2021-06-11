@@ -4,10 +4,6 @@ import Appointment from "components/Appointment";
 import "components/Application.scss";
 import axios from "axios";
 import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
-import useVisualMode from "hooks/useVisualMode";
-
-const EMPTY = "EMPTY";
-const SHOW = "SHOW";
 
 export default function Application(props) {
   const [state, setState] = useState({
