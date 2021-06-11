@@ -39,6 +39,22 @@ export default function Application() {
     })
     .catch(err => console.log('error within Application.js:', err));
   }
+
+  function deleteInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios.delete(`/api/appointments/${id}`)
+    .then(() => {
+      setState({...state, appointments});
+    })
+    .catch(err => console.log('error when deleting appointment:', err));
+  }
   
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
@@ -61,7 +77,8 @@ export default function Application() {
       {...appointment}
       interview={getInterview(state, appointment.interview)}
       interviewers={interviewers}
-      bookInterview={bookInterview}/>
+      bookInterview={bookInterview}
+      deleteInterview={deleteInterview}/>
   );
   appointmentsArr.push(<Appointment key="last" time="5pm" />);
 
