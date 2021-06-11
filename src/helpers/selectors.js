@@ -1,7 +1,4 @@
-// import axios from "axios";
-
 export function getAppointmentsForDay(state, day) {
-  // console.log('state:', state);
   if (state.days.length === 0) return [];
 
   let idsOnDay = state.days.filter(x => x.name === day);
@@ -26,7 +23,6 @@ export function getInterview(state, interview) {
 }
 
 export function getInterviewersForDay(state, day) {
-  // console.log('state:', state);
   if (state.days.length === 0) return [];
 
   let idsOnDay = state.days.filter(x => x.name === day);

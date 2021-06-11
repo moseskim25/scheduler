@@ -21,6 +21,7 @@ export default function Application() {
     });
   }, []);
   
+  //functions from helpers file
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
