@@ -53,18 +53,6 @@ export default function Application() {
       setState({...state, appointments});
     })
   }
-  
-  // const editInterview(id, interview) {
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: { ...interview }
-  //   };
-
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment
-  //   };
-  // }
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 
