@@ -27,11 +27,10 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview)
+    props
+    .bookInterview(props.id, interview)
     .then(() => transition(SHOW))
-    .catch(() => 
-      transition(ERROR_SAVE)
-    );
+    .catch(error => transition(ERROR_SAVE, true));
   }
 
   function confirmDelete() {
@@ -39,10 +38,12 @@ export default function Appointment(props) {
   }
 
   function deleteInterview() {
-    transition(DELETING);
+    transition(DELETING, true);
     props.deleteInterview(props.id)
     .then(() => transition(EMPTY))
-    .catch(() => transition(ERROR_DELETE));
+    .catch(() => {
+      transition(ERROR_DELETE, true)
+    });
   }
 
   return (
@@ -66,8 +67,8 @@ export default function Appointment(props) {
       {mode === SAVING && <Status message='Saving' />}
       {mode === DELETING && <Status message='Deleting' />}
       {mode === CONFIRM && <Confirm onCancel={() => back()} onConfirm={deleteInterview} message='Are you sure you would like to delete?'/>}
-      {mode === ERROR_SAVE && <Error message='Encountered an error while saving. Please try again' onClose={() => {back(); back();}}/>}
-      {mode === ERROR_DELETE && <Error message='Encountered an error while deleting. Please try again' onClose={() => {back(); back(); back();}}/>}
+      {mode === ERROR_SAVE && <Error message='Encountered an error while saving. Please try again' onClose={() => {back()}}/>}
+      {mode === ERROR_DELETE && <Error message='Encountered an error while deleting. Please try again' onClose={() => {back(); back();}}/>}
 
     </div>
   );
