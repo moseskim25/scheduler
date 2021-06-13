@@ -22,6 +22,7 @@ export function getAppointmentsForDay(state, day) {
 
 
 //ex: interview = { student: "Archie Cohen", interviewer: 2 }
+//returns: 
 export function getInterview(state, interview) {
   if (interview === null) return null;
   

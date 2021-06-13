@@ -37,7 +37,6 @@ export default function Application() {
     .then(() => {
       setState({...state, appointments});
     })
-    .catch(err => console.log('error within Application.js:', err));
   }
 
   function deleteInterview(id) {
@@ -53,9 +52,19 @@ export default function Application() {
     .then(() => {
       setState({...state, appointments});
     })
-    .catch(err => console.log('error when deleting appointment:', err));
   }
   
+  // const editInterview(id, interview) {
+  //   const appointment = {
+  //     ...state.appointments[id],
+  //     interview: { ...interview }
+  //   };
+
+  //   const appointments = {
+  //     ...state.appointments,
+  //     [id]: appointment
+  //   };
+  // }
 
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
 

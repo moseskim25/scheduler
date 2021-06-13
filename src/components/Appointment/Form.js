@@ -4,7 +4,7 @@ import InterviewerList from "components/InterviewerList";
 import { action } from "@storybook/addon-actions/dist/preview";
 
 export default function Form(props) {
-  const [name, setName] = useState(props.name || "");
+  const [name, setName] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
   const reset = function() {
@@ -32,7 +32,7 @@ export default function Form(props) {
             onChange={event => setName(event.target.value)}
           />
         </form>
-        <InterviewerList interviewers={props.interviewers} value={interviewer} onChange={setInterviewer}/>
+        <InterviewerList interviewers={props.interviewers} value={interviewer || (props.interview && props.interviewer)} onChange={setInterviewer}/>
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
