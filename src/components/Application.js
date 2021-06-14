@@ -32,7 +32,7 @@ export default function Application() {
       bookInterview={bookInterview}
       deleteInterview={deleteInterview}/>
   );
-  appointmentsArr.push(<Appointment key="last" time="5pm" />);
+  // appointmentsArr.push(<Appointment key="last" time="5pm" />);
 
   return (
     <main className="layout">
