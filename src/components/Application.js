@@ -44,7 +44,10 @@ export default function Application() {
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
       </section>
-      <section className="schedule">{appointmentsArr}</section>
+      <section className="schedule">
+        {appointmentsArr}
+        <Appointment key="last" time={"5pm"} />
+      </section>
     </main>
   );
 }
