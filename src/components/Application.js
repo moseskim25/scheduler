@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import "components/Application.scss";
-import axios from "axios";
 import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 import useApplicationData from 'hooks/useApplicationData';
 
@@ -32,7 +31,8 @@ export default function Application() {
       bookInterview={bookInterview}
       deleteInterview={deleteInterview}/>
   );
-  // appointmentsArr.push(<Appointment key="last" time="5pm" />);
+
+  console.log('+++++++++');
 
   return (
     <main className="layout">
