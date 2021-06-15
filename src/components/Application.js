@@ -32,8 +32,6 @@ export default function Application() {
       deleteInterview={deleteInterview}/>
   );
 
-  console.log('+++++++++');
-
   return (
     <main className="layout">
       <section className="sidebar">
