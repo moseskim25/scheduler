@@ -53,7 +53,7 @@ export default function Appointment(props) {
   }
 
   return (
-    <div>
+    <div data-testid='appointment'>
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === CREATE && <Form 
