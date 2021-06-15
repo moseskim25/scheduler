@@ -46,8 +46,6 @@ export default function Appointment(props) {
     });
   }
 
-  console.log(props);
-
   if (props.time === '5pm') {
     return (<div>
       <Header time={props.time}/>
