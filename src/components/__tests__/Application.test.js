@@ -3,6 +3,7 @@ import React from "react";
 import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByAltText, queryByText } from "@testing-library/react";
 
 import Application from "components/Application";
+import axios from 'axios';
 
 afterEach(cleanup);
 
@@ -89,5 +90,44 @@ describe('Application', () => {
 
     expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
   })
-})
 
+  it("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+    const { container, debug } = render(<Application />);
+  
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments[0];
+    
+    fireEvent.click(getByAltText(appointment, 'Add'));
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones"}
+    })
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+    fireEvent.click(getByText(appointment, 'Save'));
+
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, "Error"));
+
+    expect(getByText(appointment, 'Encountered an error while saving. Please try again')).toBeInTheDocument();
+  });
+
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
+
+    const { container, debug } = render(<Application />);
+  
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments.find(each => queryByText(each, 'Archie Cohen'));
+    
+    fireEvent.click(queryByAltText(appointment, 'Delete'));
+    fireEvent.click(queryByText(appointment, "Confirm"));
+    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, "Error"));
+    expect(getByText(appointment, 'Encountered an error while deleting. Please try again')).toBeInTheDocument();
+
+  });
+})
