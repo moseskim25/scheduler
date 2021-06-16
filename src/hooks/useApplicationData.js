@@ -86,13 +86,11 @@ export default function useApplicationData() {
   }
   const updateSpots = (state, day) => {
     const dayToUpdate = day || state.day
-    console.log('daytoupdate:', dayToUpdate);
     // const dayObj = state.days.find(day => day.name === dayToUpdate)
     // const dayObjIndex = state.days.findIndex(day => day.name === dayToUpdate)
     const [listOfApptIds, dayObj, dayObjIndex] = findDay(state.days, dayToUpdate)
-    console.log('array:', listOfApptIds, dayObj, dayObjIndex);
     // const spots = listOfApptIds.filter(apptId => !state.appointments[apptId].interview).length
-    const spots = listOfApptIds.reduce((spots, apptId) => spots += state.appointments[apptId].interview ? 1 : 0, 0)
+    const spots = listOfApptIds.reduce((spots, apptId) => spots + (state.appointments[apptId].interview ? 0 : 1), 0);
   
     const newDay = { ...dayObj, spots }
     const newDays = [...state.days]
