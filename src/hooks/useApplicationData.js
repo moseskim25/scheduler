@@ -22,10 +22,15 @@ export default function useApplicationData() {
     };
     return axios.put(`/api/appointments/${id}`, {interview})
     .then(() => {
-      const days = [...state.days];
-      const today = state.days.find(day => day.appointments.includes(id));
-      today.spots--;
-      setState({...state, appointments, days});
+      // const days = [...state.days];
+      // const today = state.days.find(day => day.appointments.includes(id));
+      // today.spots--;
+      setState((prev) => {
+        const newState = { ...prev, appointments }
+        const newNewState = updateSpots(newState)
+
+        return newNewState
+      });
     })
   }
 
@@ -40,10 +45,15 @@ export default function useApplicationData() {
     };
     return axios.delete(`/api/appointments/${id}`)
     .then(() => {
-      const days = [...state.days];
-      const today = state.days.find(day => day.appointments.includes(id));
-      today.spots++;
-      setState({...state, appointments, days});
+      // const days = [...state.days];
+      // const today = state.days.find(day => day.appointments.includes(id));
+      // today.spots++;
+      setState((prev) => {
+        const newState = { ...prev, appointments }
+        const newNewState = updateSpots(newState)
+
+        return newNewState
+      });
     })
   }
 
@@ -63,6 +73,33 @@ export default function useApplicationData() {
       }));
     });
   }, []);
+
+  const findDay = (days, dayToUpdate) => {
+    return days.reduce((acc, day, index) => {
+      if (day.name === dayToUpdate) {
+        acc.push(day.appointments)
+        acc.push(day)
+        acc.push(index)
+      }
+      return acc;
+    }, [])
+  }
+  const updateSpots = (state, day) => {
+    const dayToUpdate = day || state.day
+    console.log('daytoupdate:', dayToUpdate);
+    // const dayObj = state.days.find(day => day.name === dayToUpdate)
+    // const dayObjIndex = state.days.findIndex(day => day.name === dayToUpdate)
+    const [listOfApptIds, dayObj, dayObjIndex] = findDay(state.days, dayToUpdate)
+    console.log('array:', listOfApptIds, dayObj, dayObjIndex);
+    // const spots = listOfApptIds.filter(apptId => !state.appointments[apptId].interview).length
+    const spots = listOfApptIds.reduce((spots, apptId) => spots += state.appointments[apptId].interview ? 1 : 0, 0)
+  
+    const newDay = { ...dayObj, spots }
+    const newDays = [...state.days]
+    newDays[dayObjIndex] = newDay
+  
+    return { ...state, days: newDays }
+  }
 
   return { state, setDay, bookInterview, deleteInterview};
 }
