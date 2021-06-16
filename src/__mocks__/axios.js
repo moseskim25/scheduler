@@ -60,7 +60,7 @@ export default {
       return Promise.resolve({
         status: 200,
         statusText: "OK",
-        data: fixtures.days
+        data: JSON.parse(JSON.stringify(fixtures.days))
       });
     }
 
@@ -82,6 +82,20 @@ export default {
   }),
   
   put: jest.fn(() => {
+    return Promise.resolve({
+      status: 204,
+      statusText: 'No content'
+    })
+  }),
+
+  delete: jest.fn(() => {
+    return Promise.resolve({
+      status: 204,
+      statusText: 'No content'
+    })
+  }),
+
+  edit: jest.fn(() => {
     return Promise.resolve({
       status: 204,
       statusText: 'No content'
