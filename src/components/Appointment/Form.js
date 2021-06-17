@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
-import { action } from "@storybook/addon-actions/dist/preview";
 
 export default function Form(props) {
   const [name, setName] = useState(props.name || "");
@@ -25,7 +24,6 @@ export default function Form(props) {
       setError("Student name cannot be blank");
       return;
     }
-  
     setError("");
     props.onSave(name, interviewer);
   }
