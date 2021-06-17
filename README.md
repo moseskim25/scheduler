@@ -1,4 +1,5 @@
 # Interview Scheduler
+Simple application to create, edit, and delete appointment written using node.js and React.
 
 ## Setup
 
@@ -21,6 +22,11 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Dependencies
+
+
+## Example screenshots
 
 1. Main page
 ![](https://github.com/moseskim25/scheduler/blob/master/docs/main-page.png?raw=true)
